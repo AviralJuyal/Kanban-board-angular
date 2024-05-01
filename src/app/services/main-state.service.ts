@@ -8,25 +8,37 @@ import { User } from '../models/users.interface';
 export class MainStateService {
   constructor() {}
 
-  backlogList: Task[] = [
-    { id: 1, title: 'task1', status: 'ba', userId: 99 },
-    { id: 2, title: 'task2', status: 'ba', userId: 99 },
-  ];
+  backlogList: Task[] = JSON.parse(localStorage.getItem('backlog') || '');
+  // .length === 0
+  //   ? [
+  //       { id: 1, title: 'task1', status: 'ba', userId: 99 },
+  //       { id: 2, title: 'task2', status: 'ba', userId: 99 },
+  //     ]
+  //   : JSON.parse(localStorage.getItem('backlog') || '');
 
-  ongoingList: Task[] = [
-    { id: 3, title: 'task3', status: 'on', userId: 100 },
-    { id: 4, title: 'task4', status: 'on', userId: 99 },
-  ];
+  ongoingList: Task[] = JSON.parse(localStorage.getItem('ongoing') || '');
+  // .length === 0
+  //   ? [
+  //       { id: 3, title: 'task3', status: 'on', userId: 100 },
+  //       { id: 4, title: 'task4', status: 'on', userId: 99 },
+  //     ]
+  //   : JSON.parse(localStorage.getItem('ongoing') || '');
 
-  reviewList: Task[] = [
-    { id: 5, title: 'task5', status: 're', userId: 101 },
-    { id: 6, title: 'task6', status: 're', userId: 99 },
-  ];
+  reviewList: Task[] = JSON.parse(localStorage.getItem('review') || '');
+  // .length === 0
+  //   ? [
+  //       { id: 5, title: 'task5', status: 're', userId: 101 },
+  //       { id: 6, title: 'task6', status: 're', userId: 99 },
+  //     ]
+  //   : JSON.parse(localStorage.getItem('review') || '');
 
-  completeList: Task[] = [
-    { id: 7, title: 'task7', status: 'co', userId: 102 },
-    { id: 8, title: 'task8', status: 'co', userId: 99 },
-  ];
+  completeList: Task[] = JSON.parse(localStorage.getItem('complete') || '');
+  // .length === 0
+  //   ? [
+  //       { id: 7, title: 'task7', status: 'co', userId: 102 },
+  //       { id: 8, title: 'task8', status: 'co', userId: 99 },
+  //     ]
+  //   : JSON.parse(localStorage.getItem('complete') || '');
 
   users: User[] = [
     { id: 99, name: 'Aviral' },
@@ -35,13 +47,14 @@ export class MainStateService {
     { id: 102, name: 'Robot2' },
   ];
 
+  saveData() {
+    localStorage.setItem('backlog', JSON.stringify(this.backlogList));
+    localStorage.setItem('ongoing', JSON.stringify(this.ongoingList));
+    localStorage.setItem('complete', JSON.stringify(this.completeList));
+    localStorage.setItem('review', JSON.stringify(this.reviewList));
+  }
+
   removeTask(task: Task, status: string) {
-    console.log(
-      task,
-      status,
-      'inside remove task',
-      this.backlogList.filter((t) => t.id !== task.id)
-    );
     let index = 0;
     switch (status) {
       case 'ba':
@@ -103,6 +116,8 @@ export class MainStateService {
     this.addTask(draggedItem, newStatus);
 
     console.log(draggedItem, newStatus, 'dragged');
+
+    this.saveData();
 
     event?.dataTransfer?.clearData?.();
   }

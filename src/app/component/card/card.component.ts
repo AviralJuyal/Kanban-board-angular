@@ -29,6 +29,11 @@ export class CardComponent {
     this.users = this.mainService.users;
   }
 
+  handleSave(task: Task) {
+    this.isEditingId = this.isEditingId ? null : task.id;
+    this.mainService.saveData();
+  }
+
   isEditingId: number | null = null;
 
   onDragStart(event: DragEvent, task: Task): void {
