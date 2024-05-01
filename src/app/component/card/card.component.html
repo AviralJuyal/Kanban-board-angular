@@ -1,0 +1,38 @@
+<div
+  class="bg-light rounded"
+  style="width: 250px"
+  (drop)="onDrop($event, title.slice(0, 2).toLocaleLowerCase())"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  [ngStyle]="{ border: inFocus ? '3px solid orange' : 'none' }"
+>
+  <h2 [ngStyle]="{ 'background-color': color }" class="p-2 rounded-top">
+    {{ title }}
+  </h2>
+  <div
+    class="border m-2 p-3"
+    *ngFor="let task of taskList"
+    (dragstart)="onDragStart($event, task)"
+    draggable="true"
+    style="cursor: grab"
+  >
+    <div *ngIf="isEditingId !== task.id">
+      <p>{{ task.title }}</p>
+      <p>{{ getUserOfTask(task).name }}</p>
+    </div>
+    <div *ngIf="isEditingId === task.id">
+      <input type="text" [(ngModel)]="task.title" />
+      <select class="mt-2" [(ngModel)]="task.userId">
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+    <button
+      class="btn btn-primary mt-2"
+      (click)="isEditingId = isEditingId ? null : task.id"
+    >
+      {{ isEditingId ? "Save" : "Edit" }}
+    </button>
+  </div>
+</div>

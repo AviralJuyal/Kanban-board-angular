@@ -1,0 +1,32 @@
+<div class="container my-4 text-center text-light fw-bold">
+  <h1>Kanban Board</h1>
+  <div class="text-dark d-flex px-4 gap-4 mt-4">
+    <app-backlogs></app-backlogs>
+    <app-ongoing></app-ongoing>
+    <app-review></app-review>
+    <app-completed></app-completed>
+    <!-- <app-card></app-card> -->
+    <!-- <div class="bg-light rounded" style="height: 300px; width: 250px">
+      <h2>Ongoing</h2>
+      <div
+        class="border m-2 p-3"
+        *ngFor="let task of taskList"
+        (dragstart)="onDragStart($event, task)"
+      >
+        {{ task.title }}
+      </div>
+    </div>
+
+    <div
+      class="bg-light rounded"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)"
+      style="height: 300px; width: 250px"
+    >
+      <h2>Review</h2>
+      <div class="border" draggable="true">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+      </div>
+    </div> -->
+  </div>
+</div>
