@@ -8,7 +8,22 @@ import { User } from '../models/users.interface';
 export class MainStateService {
   constructor() {}
 
-  backlogList: Task[] = JSON.parse(localStorage.getItem('backlog') || '');
+  noData() {
+    return (
+      JSON.parse(localStorage.getItem('backlog') || '[]').length +
+        JSON.parse(localStorage.getItem('ongoing') || '[]').length +
+        JSON.parse(localStorage.getItem('review') || '[]').length +
+        JSON.parse(localStorage.getItem('complete') || '[]').length ===
+      0
+    );
+  }
+
+  backlogList: Task[] = this.noData()
+    ? [
+        { id: 1, title: 'task1', status: 'ba', userId: 99 },
+        { id: 2, title: 'task2', status: 'ba', userId: 99 },
+      ]
+    : JSON.parse(localStorage.getItem('backlog') || '[]');
   // .length === 0
   //   ? [
   //       { id: 1, title: 'task1', status: 'ba', userId: 99 },
@@ -16,7 +31,12 @@ export class MainStateService {
   //     ]
   //   : JSON.parse(localStorage.getItem('backlog') || '');
 
-  ongoingList: Task[] = JSON.parse(localStorage.getItem('ongoing') || '');
+  ongoingList: Task[] = this.noData()
+    ? [
+        { id: 3, title: 'task3', status: 'on', userId: 100 },
+        { id: 4, title: 'task4', status: 'on', userId: 99 },
+      ]
+    : JSON.parse(localStorage.getItem('ongoing') || '[]');
   // .length === 0
   //   ? [
   //       { id: 3, title: 'task3', status: 'on', userId: 100 },
@@ -24,7 +44,12 @@ export class MainStateService {
   //     ]
   //   : JSON.parse(localStorage.getItem('ongoing') || '');
 
-  reviewList: Task[] = JSON.parse(localStorage.getItem('review') || '');
+  reviewList: Task[] = this.noData()
+    ? [
+        { id: 5, title: 'task5', status: 're', userId: 101 },
+        { id: 6, title: 'task6', status: 're', userId: 99 },
+      ]
+    : JSON.parse(localStorage.getItem('review') || '[]');
   // .length === 0
   //   ? [
   //       { id: 5, title: 'task5', status: 're', userId: 101 },
@@ -32,7 +57,12 @@ export class MainStateService {
   //     ]
   //   : JSON.parse(localStorage.getItem('review') || '');
 
-  completeList: Task[] = JSON.parse(localStorage.getItem('complete') || '');
+  completeList: Task[] = this.noData()
+    ? [
+        { id: 7, title: 'task7', status: 'co', userId: 102 },
+        { id: 8, title: 'task8', status: 'co', userId: 99 },
+      ]
+    : JSON.parse(localStorage.getItem('complete') || '[]');
   // .length === 0
   //   ? [
   //       { id: 7, title: 'task7', status: 'co', userId: 102 },
